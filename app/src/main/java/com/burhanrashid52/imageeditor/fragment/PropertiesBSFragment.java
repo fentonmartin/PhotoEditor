@@ -11,8 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SeekBar;
 
-import com.burhanrashid52.imageeditor.adapter.ColorPickerAdapter;
 import com.burhanrashid52.imageeditor.R;
+import com.burhanrashid52.imageeditor.adapter.ColorPickerAdapter;
 
 public class PropertiesBSFragment extends BottomSheetDialogFragment implements SeekBar.OnSeekBarChangeListener {
 
@@ -36,7 +36,7 @@ public class PropertiesBSFragment extends BottomSheetDialogFragment implements S
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_bottom_properties_dialog, container, false);
     }
 
@@ -53,6 +53,7 @@ public class PropertiesBSFragment extends BottomSheetDialogFragment implements S
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         rvColor.setLayoutManager(layoutManager);
         rvColor.setHasFixedSize(true);
+
         ColorPickerAdapter colorPickerAdapter = new ColorPickerAdapter(getActivity());
         colorPickerAdapter.setOnColorPickerClickListener(new ColorPickerAdapter.OnColorPickerClickListener() {
             @Override
@@ -74,14 +75,12 @@ public class PropertiesBSFragment extends BottomSheetDialogFragment implements S
     public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
         switch (seekBar.getId()) {
             case R.id.sbOpacity:
-                if (mProperties != null) {
+                if (mProperties != null)
                     mProperties.onOpacityChanged(i);
-                }
                 break;
             case R.id.sbSize:
-                if (mProperties != null) {
+                if (mProperties != null)
                     mProperties.onBrushSizeChanged(i);
-                }
                 break;
         }
     }
