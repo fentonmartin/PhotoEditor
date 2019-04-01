@@ -1,4 +1,4 @@
-package com.burhanrashid52.imageeditor;
+package com.burhanrashid52.imageeditor.fragment;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
@@ -17,6 +17,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+
+import com.burhanrashid52.imageeditor.R;
 
 public class StickerBSFragment extends BottomSheetDialogFragment {
 

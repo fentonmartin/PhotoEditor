@@ -3,18 +3,15 @@ package com.burhanrashid52.imageeditor;
 import android.app.Application;
 import android.content.Context;
 
-/**
- * Created by Burhanuddin Rashid on 1/23/2018.
- */
-
 public class PhotoApp extends Application {
+
     private static PhotoApp sPhotoApp;
-    private static final String TAG = PhotoApp.class.getSimpleName();
 
     @Override
     public void onCreate() {
         super.onCreate();
         sPhotoApp = this;
+
      /*   FontRequest fontRequest = new FontRequest(
                 "com.google.android.gms.fonts",
                 "com.google.android.gms",

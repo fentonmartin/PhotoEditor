@@ -27,6 +27,10 @@ import android.widget.TextView;
 import com.burhanrashid52.imageeditor.base.BaseActivity;
 import com.burhanrashid52.imageeditor.filters.FilterListener;
 import com.burhanrashid52.imageeditor.filters.FilterViewAdapter;
+import com.burhanrashid52.imageeditor.fragment.EmojiBSFragment;
+import com.burhanrashid52.imageeditor.fragment.PropertiesBSFragment;
+import com.burhanrashid52.imageeditor.fragment.StickerBSFragment;
+import com.burhanrashid52.imageeditor.fragment.TextEditorDialogFragment;
 import com.burhanrashid52.imageeditor.tools.EditingToolsAdapter;
 import com.burhanrashid52.imageeditor.tools.ToolType;
 
@@ -36,9 +40,9 @@ import java.io.IOException;
 import ja.burhanrashid52.photoeditor.OnPhotoEditorListener;
 import ja.burhanrashid52.photoeditor.PhotoEditor;
 import ja.burhanrashid52.photoeditor.PhotoEditorView;
+import ja.burhanrashid52.photoeditor.PhotoFilter;
 import ja.burhanrashid52.photoeditor.SaveSettings;
 import ja.burhanrashid52.photoeditor.ViewType;
-import ja.burhanrashid52.photoeditor.PhotoFilter;
 
 public class EditImageActivity extends BaseActivity implements OnPhotoEditorListener,
         View.OnClickListener,

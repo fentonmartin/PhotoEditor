@@ -1,4 +1,4 @@
-package com.burhanrashid52.imageeditor;
+package com.burhanrashid52.imageeditor.adapter;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -13,6 +13,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.burhanrashid52.imageeditor.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +36,7 @@ public class ColorPickerAdapter extends RecyclerView.Adapter<ColorPickerAdapter.
         this.colorPickerColors = colorPickerColors;
     }
 
-    ColorPickerAdapter(@NonNull Context context) {
+    public ColorPickerAdapter(@NonNull Context context) {
         this(context, getDefaultColors(context));
         this.context = context;
         this.inflater = LayoutInflater.from(context);

@@ -1,4 +1,4 @@
-package com.burhanrashid52.imageeditor;
+package com.burhanrashid52.imageeditor.fragment;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -19,6 +19,9 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.burhanrashid52.imageeditor.adapter.ColorPickerAdapter;
+import com.burhanrashid52.imageeditor.R;
 
 /**
  * Created by Burhanuddin Rashid on 1/16/2018.
