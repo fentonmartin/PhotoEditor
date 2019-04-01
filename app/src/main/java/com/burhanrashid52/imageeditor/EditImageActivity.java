@@ -38,7 +38,7 @@ import com.burhanrashid52.imageeditor.fragment.EmojiBSFragment;
 import com.burhanrashid52.imageeditor.fragment.PropertiesBSFragment;
 import com.burhanrashid52.imageeditor.fragment.StickerBSFragment;
 import com.burhanrashid52.imageeditor.fragment.TextEditorDialogFragment;
-import com.burhanrashid52.imageeditor.tools.EditingToolsAdapter;
+import com.burhanrashid52.imageeditor.adapter.EditingToolsAdapter;
 import com.burhanrashid52.imageeditor.tools.ToolType;
 
 import java.io.File;
