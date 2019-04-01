@@ -20,12 +20,8 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.burhanrashid52.imageeditor.adapter.ColorPickerAdapter;
 import com.burhanrashid52.imageeditor.R;
-
-/**
- * Created by Burhanuddin Rashid on 1/16/2018.
- */
+import com.burhanrashid52.imageeditor.adapter.ColorPickerAdapter;
 
 public class TextEditorDialogFragment extends DialogFragment {
 
@@ -33,7 +29,6 @@ public class TextEditorDialogFragment extends DialogFragment {
     public static final String EXTRA_INPUT_TEXT = "extra_input_text";
     public static final String EXTRA_COLOR_CODE = "extra_color_code";
     private EditText mAddTextEditText;
-    private TextView mAddTextDoneTextView;
     private InputMethodManager mInputMethodManager;
     private int mColorCode;
     private TextEditor mTextEditor;
@@ -42,7 +37,6 @@ public class TextEditorDialogFragment extends DialogFragment {
         void onDone(String inputText, int colorCode);
     }
 
-
     //Show dialog with provide text and text color
     public static TextEditorDialogFragment show(@NonNull AppCompatActivity appCompatActivity,
                                                 @NonNull String inputText,
@@ -50,6 +44,7 @@ public class TextEditorDialogFragment extends DialogFragment {
         Bundle args = new Bundle();
         args.putString(EXTRA_INPUT_TEXT, inputText);
         args.putInt(EXTRA_COLOR_CODE, colorCode);
+
         TextEditorDialogFragment fragment = new TextEditorDialogFragment();
         fragment.setArguments(args);
         fragment.show(appCompatActivity.getSupportFragmentManager(), TAG);
@@ -77,22 +72,24 @@ public class TextEditorDialogFragment extends DialogFragment {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.add_text_dialog, container, false);
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         mAddTextEditText = view.findViewById(R.id.add_text_edit_text);
         mInputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-        mAddTextDoneTextView = view.findViewById(R.id.add_text_done_tv);
+        TextView mAddTextDoneTextView = view.findViewById(R.id.add_text_done_tv);
 
         //Setup the color picker for text color
         RecyclerView addTextColorPickerRecyclerView = view.findViewById(R.id.add_text_color_picker_recycler_view);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         addTextColorPickerRecyclerView.setLayoutManager(layoutManager);
         addTextColorPickerRecyclerView.setHasFixedSize(true);
+
         ColorPickerAdapter colorPickerAdapter = new ColorPickerAdapter(getActivity());
         //This listener will change the text color when clicked on any color from picker
         colorPickerAdapter.setOnColorPickerClickListener(new ColorPickerAdapter.OnColorPickerClickListener() {
@@ -122,7 +119,6 @@ public class TextEditorDialogFragment extends DialogFragment {
         });
 
     }
-
 
     //Callback to listener if user is done with text editing
     public void setOnTextEditorListener(TextEditor textEditor) {
