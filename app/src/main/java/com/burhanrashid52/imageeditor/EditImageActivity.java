@@ -2,8 +2,10 @@ package com.burhanrashid52.imageeditor;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -12,18 +14,24 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.ConstraintSet;
+import android.support.design.widget.Snackbar;
 import android.support.transition.ChangeBounds;
 import android.support.transition.TransitionManager;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.AnticipateOvershootInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.burhanrashid52.imageeditor.base.BaseActivity;
 import com.burhanrashid52.imageeditor.filters.FilterListener;
 import com.burhanrashid52.imageeditor.filters.FilterViewAdapter;
 import com.burhanrashid52.imageeditor.fragment.EmojiBSFragment;
@@ -43,7 +51,7 @@ import ja.burhanrashid52.photoeditor.PhotoFilter;
 import ja.burhanrashid52.photoeditor.SaveSettings;
 import ja.burhanrashid52.photoeditor.ViewType;
 
-public class EditImageActivity extends BaseActivity implements
+public class EditImageActivity extends AppCompatActivity implements
         OnPhotoEditorListener,
         View.OnClickListener,
         PropertiesBSFragment.Properties,
@@ -288,11 +296,9 @@ public class EditImageActivity extends BaseActivity implements
         mTxtCurrentTool.setText(R.string.label_sticker);
     }
 
-    @Override
-    public void isPermissionGranted(boolean isGranted, String permission) {
-        if (isGranted) {
+    public void isPermissionGranted(boolean isGranted) {
+        if (isGranted)
             saveImage();
-        }
     }
 
     private void showSaveDialog() {
@@ -397,4 +403,56 @@ public class EditImageActivity extends BaseActivity implements
             super.onBackPressed();
         }
     }
+
+    /* Base Activity ------------------------------------------------------------------------------*/
+
+    public static final int READ_WRITE_STORAGE = 52;
+    private ProgressDialog mProgressDialog;
+
+    public boolean requestPermission(String permission) {
+        boolean isGranted = ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED;
+        if (!isGranted)
+            ActivityCompat.requestPermissions(
+                    this,
+                    new String[]{permission},
+                    READ_WRITE_STORAGE);
+        return isGranted;
+    }
+
+    public void makeFullScreen() {
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case READ_WRITE_STORAGE:
+                isPermissionGranted(grantResults[0] == PackageManager.PERMISSION_GRANTED);
+                break;
+        }
+    }
+
+    protected void showLoading(@NonNull String message) {
+        mProgressDialog = new ProgressDialog(this);
+        mProgressDialog.setMessage(message);
+        mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        mProgressDialog.setCancelable(false);
+        mProgressDialog.show();
+    }
+
+    protected void hideLoading() {
+        if (mProgressDialog != null)
+            mProgressDialog.dismiss();
+    }
+
+    protected void showSnackbar(@NonNull String message) {
+        View view = findViewById(android.R.id.content);
+        if (view != null)
+            Snackbar.make(view, message, Snackbar.LENGTH_SHORT).show();
+        else
+            Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    /* End of Activity ----------------------------------------------------------------------------*/
 }
