@@ -5,7 +5,6 @@ import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -44,30 +43,30 @@ import ja.burhanrashid52.photoeditor.PhotoFilter;
 import ja.burhanrashid52.photoeditor.SaveSettings;
 import ja.burhanrashid52.photoeditor.ViewType;
 
-public class EditImageActivity extends BaseActivity implements OnPhotoEditorListener,
+public class EditImageActivity extends BaseActivity implements
+        OnPhotoEditorListener,
         View.OnClickListener,
         PropertiesBSFragment.Properties,
         EmojiBSFragment.EmojiListener,
-        StickerBSFragment.StickerListener, EditingToolsAdapter.OnItemSelected, FilterListener {
+        StickerBSFragment.StickerListener,
+        EditingToolsAdapter.OnItemSelected, FilterListener {
 
     private static final String TAG = EditImageActivity.class.getSimpleName();
-    public static final String EXTRA_IMAGE_PATHS = "extra_image_paths";
     private static final int CAMERA_REQUEST = 52;
     private static final int PICK_REQUEST = 53;
+
     private PhotoEditor mPhotoEditor;
     private PhotoEditorView mPhotoEditorView;
     private PropertiesBSFragment mPropertiesBSFragment;
     private EmojiBSFragment mEmojiBSFragment;
     private StickerBSFragment mStickerBSFragment;
     private TextView mTxtCurrentTool;
-    private Typeface mWonderFont;
     private RecyclerView mRvTools, mRvFilters;
     private EditingToolsAdapter mEditingToolsAdapter = new EditingToolsAdapter(this);
     private FilterViewAdapter mFilterViewAdapter = new FilterViewAdapter(this);
     private ConstraintLayout mRootView;
     private ConstraintSet mConstraintSet = new ConstraintSet();
     private boolean mIsFilterVisible;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,8 +75,6 @@ public class EditImageActivity extends BaseActivity implements OnPhotoEditorList
         setContentView(R.layout.activity_edit_image);
 
         initViews();
-
-        mWonderFont = Typeface.createFromAsset(getAssets(), "beyond_wonderland.ttf");
 
         mPropertiesBSFragment = new PropertiesBSFragment();
         mEmojiBSFragment = new EmojiBSFragment();
@@ -94,20 +91,11 @@ public class EditImageActivity extends BaseActivity implements OnPhotoEditorList
         mRvFilters.setLayoutManager(llmFilters);
         mRvFilters.setAdapter(mFilterViewAdapter);
 
-
-        //Typeface mTextRobotoTf = ResourcesCompat.getFont(this, R.font.roboto_medium);
-        //Typeface mEmojiTypeFace = Typeface.createFromAsset(getAssets(), "emojione-android.ttf");
-
         mPhotoEditor = new PhotoEditor.Builder(this, mPhotoEditorView)
-                .setPinchTextScalable(true) // set flag to make text scalable when pinch
-                //.setDefaultTextTypeface(mTextRobotoTf)
-                //.setDefaultEmojiTypeface(mEmojiTypeFace)
-                .build(); // build photo editor sdk
+                .setPinchTextScalable(true)
+                .build();
 
         mPhotoEditor.setOnPhotoEditorListener(this);
-
-        //Set Image Dynamically
-        // mPhotoEditorView.getSource().setImageResource(R.drawable.color_palette);
     }
 
     private void initViews() {
@@ -141,7 +129,6 @@ public class EditImageActivity extends BaseActivity implements OnPhotoEditorList
 
         imgClose = findViewById(R.id.imgClose);
         imgClose.setOnClickListener(this);
-
     }
 
     @Override
@@ -185,28 +172,22 @@ public class EditImageActivity extends BaseActivity implements OnPhotoEditorList
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-
             case R.id.imgUndo:
                 mPhotoEditor.undo();
                 break;
-
             case R.id.imgRedo:
                 mPhotoEditor.redo();
                 break;
-
             case R.id.imgSave:
                 saveImage();
                 break;
-
             case R.id.imgClose:
                 onBackPressed();
                 break;
-
             case R.id.imgCamera:
                 Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
                 startActivityForResult(cameraIntent, CAMERA_REQUEST);
                 break;
-
             case R.id.imgGallery:
                 Intent intent = new Intent();
                 intent.setType("image/*");
