@@ -35,10 +35,8 @@ public class EmojiBSFragment extends BottomSheetDialogFragment {
 
         @Override
         public void onStateChanged(@NonNull View bottomSheet, int newState) {
-            if (newState == BottomSheetBehavior.STATE_HIDDEN) {
+            if (newState == BottomSheetBehavior.STATE_HIDDEN)
                 dismiss();
-            }
-
         }
 
         @Override
@@ -52,10 +50,11 @@ public class EmojiBSFragment extends BottomSheetDialogFragment {
         super.setupDialog(dialog, style);
         View contentView = View.inflate(getContext(), R.layout.fragment_bottom_sticker_emoji_dialog, null);
         dialog.setContentView(contentView);
+
         CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) ((View) contentView.getParent()).getLayoutParams();
         CoordinatorLayout.Behavior behavior = params.getBehavior();
 
-        if (behavior != null && behavior instanceof BottomSheetBehavior) {
+        if (behavior instanceof BottomSheetBehavior) {
             ((BottomSheetBehavior) behavior).setBottomSheetCallback(mBottomSheetBehaviorCallback);
         }
         ((View) contentView.getParent()).setBackgroundColor(getResources().getColor(android.R.color.transparent));
@@ -76,14 +75,15 @@ public class EmojiBSFragment extends BottomSheetDialogFragment {
 
         ArrayList<String> emojisList = PhotoEditor.getEmojis(getActivity());
 
+        @NonNull
         @Override
-        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_emoji, parent, false);
             return new ViewHolder(view);
         }
 
         @Override
-        public void onBindViewHolder(ViewHolder holder, int position) {
+        public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
             holder.txtEmoji.setText(emojisList.get(position));
         }
 
@@ -98,13 +98,11 @@ public class EmojiBSFragment extends BottomSheetDialogFragment {
             ViewHolder(View itemView) {
                 super(itemView);
                 txtEmoji = itemView.findViewById(R.id.txtEmoji);
-
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (mEmojiListener != null) {
+                        if (mEmojiListener != null)
                             mEmojiListener.onEmojiClick(emojisList.get(getLayoutPosition()));
-                        }
                         dismiss();
                     }
                 });
